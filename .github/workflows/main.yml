@@ -139,7 +139,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           source: "docker-compose.production.yml"
-          target: "kitty"
+          target: "kittygram_final"
       - name: Executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         env:
@@ -151,7 +151,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            cd kitty
+            cd kittygram_final
             # Выполняет pull образов с Docker Hub
             sudo docker compose -f docker-compose.production.yml pull
             # Перезапускает все контейнеры в Docker Compose
@@ -172,4 +172,4 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: Задеплоили kittygram!
+          message: Задеплоили kittygram_final!

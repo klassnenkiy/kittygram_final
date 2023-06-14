@@ -12,9 +12,9 @@ jobs:
       postgres:
         image: postgres:13.11
         env:
-          POSTGRES_USER: django_user
-          POSTGRES_PASSWORD: django_password
-          POSTGRES_DB: django_db
+          POSTGRES_USER: kittygram_user
+          POSTGRES_PASSWORD: kittygram_password
+          POSTGRES_DB: kittygram
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -31,9 +31,9 @@ jobs:
           pip install -r ./backend/requirements.txt
       - name: Test with flake8 and django tests
         env:
-          POSTGRES_USER: django_user
-          POSTGRES_PASSWORD: django_password
-          POSTGRES_DB: django_db
+          POSTGRES_USER: kittygram_user
+          POSTGRES_PASSWORD: kittygram_password
+          POSTGRES_DB: kittygram
           DB_HOST: 127.0.0.1
           DB_PORT: 5432
         run: |
@@ -139,7 +139,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           source: "docker-compose.production.yml"
-          target: "kitty"
+          target: "kittygram_final"
       - name: Executing remote ssh commands to deploy
         uses: appleboy/ssh-action@master
         env:
@@ -151,7 +151,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           script: |
-            cd kitty
+            cd kittygram_final
             # Выполняет pull образов с Docker Hub
             sudo docker compose -f docker-compose.production.yml pull
             # Перезапускает все контейнеры в Docker Compose
@@ -172,4 +172,4 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: Задеплоили kitty!
+          message: Задеплоили kittygram_final!
