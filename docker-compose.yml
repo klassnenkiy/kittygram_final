@@ -20,6 +20,7 @@ services:
       - media:/app/media/
     depends_on:
       - db
+    restart: always
 
   frontend:
     env_file: .env
@@ -37,3 +38,6 @@ services:
       - media:/app/media/
     ports:
       - ${NGINX_PORT}:80
+    depends_on:
+      - backend
+    restart: always
